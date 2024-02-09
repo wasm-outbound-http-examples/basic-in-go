@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTTP request for gobasic</title>
+  <script type="text/javascript" src="wasm_exec.js"></script>
+</head>
+<body>
+<h2>HTTP Request from inside WASM using gobasic and custom function</h2>
+
+<p>This example uses custom function in <a href="https://github.com/skx/gobasic">skx/gobasic</a>.</p>
+<p>See the output in browser developer console.</p>
+
+<p>Actual code:</p>
+<pre>
+
+res$ = HTTPGET ("https://httpbin.org/anything")
+PRINT res$
+
+</pre>
+<script type="text/javascript">
+  const go = new Go();
+  WebAssembly.instantiateStreaming(fetch('main.wasm'), go.importObject).then((result) => {
+    go.run(result.instance);
+  });
+</script>
+<section>
+  <h4>Info</h4>
+  <ul>
+    <li><a href="https://github.com/wasm-outbound-http-examples/basic-in-go/blob/main/browser-and-deno-gobasic/">Demo source code</a></li>
+    <li>Versions used on the moment of build:<small>
+      Golang: 1.22.0,
+      Gobasic: <a href="https://github.com/skx/gobasic/tree/release-2.2">release-2.2</a>.
+    </small></li>
+  </ul>
+</section>
+<footer><small>Created for (wannabe-awesome) <a href="https://github.com/vasilev/HTTP-request-from-inside-WASM">list</a></small></footer>
+</body>
+</html>
